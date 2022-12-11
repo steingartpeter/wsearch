@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { WikipediaService } from './wikipedia.service';
 
 @Component({
   selector: 'app-root',
@@ -6,7 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  pages = [];
+
+  constructor(private wikiPedia: WikipediaService) {}
+
   getTerm(term: string) {
-    console.log('Im the app, and the term arrived is: ' + term);
+    this.wikiPedia.search(term).subscribe((response: any) => {
+      //console.log(response);
+      this.pages = response.query.search;
+    });
   }
 }
